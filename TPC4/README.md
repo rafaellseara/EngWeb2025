@@ -1,4 +1,4 @@
-# TPC3: Gestão de Filmes
+# TPC4: Gestão de Filmes
 
 2025-03-24
 
@@ -9,7 +9,7 @@
 
 ### Problema
 
-O TPC3 propõe a criação de uma API REST que trata das operações CRUD.
+O TPC4 propõe a criação de uma API REST que trata das operações CRUD.
 
 Para isso, como é hábito, há uma página de templates HTML e um *server* JavaScript. No servidor, as operações CRUD estão dispostas num switch:
 + **GET** : fazem as operações de leitura
