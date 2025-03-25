@@ -1,0 +1,11 @@
+{
+  "name": "tpc3",
+  "version": "1.0.0",
+  "description": "TPC3 - Gestão de Alunos",
+  "main": "index.js",
+  "scripts": {
+    "start": "node alunos_server.js"
+  },
+  "author": "RLS",
+  "license": "ISC"
+}

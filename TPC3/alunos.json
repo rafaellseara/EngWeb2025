@@ -1,0 +1,35 @@
+{
+  "alunos": [
+    {
+      "id": "A100758",
+      "nome": "Hugo Arantes Dias",
+      "git": "https://github.com/hugodiasUM/EngWeb2024/tree/main"
+    },
+    {
+      "id": "A100615",
+      "nome": "João Miguel Mendes Moura",
+      "git": "https://github.com/joaomoura12/EngWeb2024"
+    },
+    {
+      "id": "A100759",
+      "nome": "Pedro Afonso Moreira Lopes",
+      "git": "https://github.com/LerdoPopes/EngWeb2024/tree/main/TPC1"
+    },
+    {
+      "id": "A94015",
+      "nome": "João Daniel da Silva Carvalho",
+      "git": "https://github.com/joodanic/EngWeb2024"
+    },
+    {
+      "id": "A95345",
+      "nome": "Eduardo Miguel Pacheco Silva",
+      "git": "https://github.com/dud4s/EngWeb2024"
+    },
+    {
+      "id": "A104094",
+      "nome": "Rafael Lopes Seara",
+      "gitlink": "https://github.com/rafaellseara/EngWeb2025",
+      "tpc3": "1"
+    }
+  ]
+}
