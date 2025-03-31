@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  .w3-card-4
+    header.w3-container.w3-blue
+      h1 Detalhes da Entidade
+    
+    .w3-container
+      a.w3-button.w3-red(style="margin: 10px;")(href="/contratos") Voltar à Página Principal
+
+    .w3-container
+      table.w3-table-all
+        tr
+          th Nome da Entidade
+          td= entidade.nome
+        tr
+          th NIPC
+          td= entidade.nipc
+    
+    .w3-container
+      h2 Contratos Associados
+      table.w3-table-all
+        thead
+          tr
+            th Id do Contrato
+            th Objeto
+            th Data de Celebração
+            th Preço Contratual
+        tbody
+          each contrato in contratos
+            tr
+              td
+                a(href="/contratos/" + contrato._id)= contrato._id
+              td= contrato.objectoContrato
+              td= contrato.dataCelebracaoContrato
+              td= contrato.precoContratual
+    
+    .w3-container
+      h3 Total do Valor dos Contratos: #{totalValor} €

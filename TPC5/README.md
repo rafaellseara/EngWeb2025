@@ -1,21 +1,5 @@
 # TPC5: Criação de uma App para Gestão de Alunos  
 
-Desenvolvimento de uma aplicação com dois serviços: uma **API de dados** e um **front-end**.  
-
-## 1. API de Dados  
-- Aplicação em **Node.js** que recebe pedidos **REST**.  
-- Interage com **MongoDB** para obter e armazenar dados.  
-- Responde em **JSON**.  
-
-## 2. Front-end  
-- Aplicação em **Node.js** com interface web usando **templates PUG**.  
-- Processa pedidos do utilizador e solicita dados à API de dados quando necessário.  
-
-**Nota:** Ambos os serviços podem ser prototipados com **Express** e desenvolvidos a partir daí. A **API de dados** não incluirá views.  
-
-
-# TPC5: Criação de uma App para Gestão de Alunos  
-
 2025-03-29
 
 ## Autor:
@@ -23,7 +7,7 @@ Desenvolvimento de uma aplicação com dois serviços: uma **API de dados** e um
 - Rafael Lopes Seara
 - A104094
 
-### Problema
+## Problema
 
 Desenvolvimento de uma aplicação com dois serviços: uma **API de dados** e um **front-end**.  
 
@@ -47,8 +31,8 @@ O controlador (`alunos.js`) contém métodos para listar alunos, buscar por ID, 
 
 ## Instrução de utilização
 
-Depois de ter o servidor JSON com o conjunto de dados estruturado a correr na porta 3000, pode iniciar o servidor executando o seguinte comando:
+Depois de ter mongoDB com o conjunto de dados estruturado a correr, pode iniciar o servidor executando o seguinte comando:
 
 ```
-$ npm run dev
+$ npm start
 ```
