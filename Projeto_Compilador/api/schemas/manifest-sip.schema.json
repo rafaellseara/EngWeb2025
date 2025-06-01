@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Manifest SIP",
+    "type": "object",
+    "required": ["id", "author", "createdAt", "items"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "author": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["type", "path"],
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+  

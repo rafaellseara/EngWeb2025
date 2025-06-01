@@ -1,0 +1,761 @@
+openapi: 3.0.1
+info:
+  title: Eu Digital API
+  version: 1.0.0
+  description: API RESTful para gestão do “eu digital” — ingestão de pacotes SIP, CRUD de fotos, textos, resultados académicos, resultados desportivos, ficheiros e eventos.
+servers:
+  - url: /api
+
+paths:
+  /ingest:
+    post:
+      summary: Ingest a SIP package
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                package:
+                  type: string
+                  format: binary
+                  description: ZIP file containing the SIP (manifest-sip.json + data/)
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ingested:
+                    type: array
+                    items:
+                      type: string
+                      format: uuid
+        '400':
+          description: Validation error
+        '500':
+          description: Internal server error
+
+  /photos:
+    get:
+      summary: List photos
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Page number
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Items per page
+        - in: query
+          name: tag
+          schema:
+            type: string
+          description: Filter by tag
+        - in: query
+          name: author
+          schema:
+            type: string
+          description: Filter by author
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Photo'
+    post:
+      summary: Create a photo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoInput'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Photo'
+        '400':
+          description: Validation error
+
+  /photos/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Photo UUID
+    get:
+      summary: Get a photo by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Photo'
+        '404':
+          description: Not found
+    put:
+      summary: Update a photo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoInput'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Photo'
+        '400':
+          description: Validation error
+        '404':
+          description: Not found
+    delete:
+      summary: Delete a photo
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not found
+
+  /texts:
+    get:
+      summary: List texts
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: tag
+          schema:
+            type: string
+        - in: query
+          name: author
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Text'
+    post:
+      summary: Create a text entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextInput'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Text'
+        '400':
+          description: Validation error
+
+  /texts/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: Get a text by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Text'
+        '404':
+          description: Not found
+    put:
+      summary: Update a text
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextInput'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Text'
+        '400':
+          description: Validation error
+        '404':
+          description: Not found
+    delete:
+      summary: Delete a text
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not found
+
+  /academicResults:
+    get:
+      summary: List academic results
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: institution
+          schema:
+            type: string
+        - in: query
+          name: author
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AcademicResult'
+    post:
+      summary: Create an academic result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademicResultInput'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicResult'
+        '400':
+          description: Validation error
+
+  /academicResults/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: Get academic result by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicResult'
+        '404':
+          description: Not found
+    put:
+      summary: Update an academic result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademicResultInput'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicResult'
+        '400':
+          description: Validation error
+        '404':
+          description: Not found
+    delete:
+      summary: Delete an academic result
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not found
+
+  /sportResults:
+    get:
+      summary: List sport results
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: activity
+          schema:
+            type: string
+        - in: query
+          name: author
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportResult'
+    post:
+      summary: Create a sport result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SportResultInput'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportResult'
+        '400':
+          description: Validation error
+
+  /sportResults/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: Get sport result by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportResult'
+        '404':
+          description: Not found
+    put:
+      summary: Update a sport result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SportResultInput'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportResult'
+        '400':
+          description: Validation error
+        '404':
+          description: Not found
+    delete:
+      summary: Delete a sport result
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not found
+
+  /files:
+    get:
+      summary: List files
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: author
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileItem'
+    post:
+      summary: Create a file record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileItemInput'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileItem'
+        '400':
+          description: Validation error
+
+  /files/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: Get a file record by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileItem'
+        '404':
+          description: Not found
+    put:
+      summary: Update a file record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileItemInput'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileItem'
+        '400':
+          description: Validation error
+        '404':
+          description: Not found
+    delete:
+      summary: Delete a file record
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not found
+
+  /events:
+    get:
+      summary: List events
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: author
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+    post:
+      summary: Create an event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInput'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Validation error
+
+  /events/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: Get an event by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '404':
+          description: Not found
+    put:
+      summary: Update an event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInput'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Validation error
+        '404':
+          description: Not found
+    delete:
+      summary: Delete an event
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not found
+
+components:
+  schemas:
+    BaseItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        author:
+          type: string
+        type:
+          type: string
+        visibility:
+          type: string
+          enum: [public, friends, private]
+        tags:
+          type: array
+          items:
+            type: string
+      required: [id, author, type]
+
+    Photo:
+      allOf:
+        - $ref: '#/components/schemas/BaseItem'
+        - type: object
+          properties:
+            format:
+              type: string
+            resolution:
+              type: object
+              properties:
+                width:
+                  type: integer
+                height:
+                  type: integer
+            location:
+              type: object
+              properties:
+                lat:
+                  type: number
+                lon:
+                  type: number
+                description:
+                  type: string
+            caption:
+              type: string
+
+    PhotoInput:
+      allOf:
+        - $ref: '#/components/schemas/Photo'
+      required: [id, author, type]
+
+    Text:
+      allOf:
+        - $ref: '#/components/schemas/BaseItem'
+        - type: object
+          properties:
+            title:
+              type: string
+            content:
+              type: string
+            summary:
+              type: string
+
+    TextInput:
+      allOf:
+        - $ref: '#/components/schemas/Text'
+      required: [id, author, type, content]
+
+    AcademicResult:
+      allOf:
+        - $ref: '#/components/schemas/BaseItem'
+        - type: object
+          properties:
+            institution:
+              type: string
+            course:
+              type: string
+            grade:
+              type: string
+            scale:
+              type: string
+            evaluationDate:
+              type: string
+              format: date-time
+
+    AcademicResultInput:
+      allOf:
+        - $ref: '#/components/schemas/AcademicResult'
+      required: [id, author, type, institution, course, grade, scale, evaluationDate]
+
+    SportResult:
+      allOf:
+        - $ref: '#/components/schemas/BaseItem'
+        - type: object
+          properties:
+            activity:
+              type: string
+            value:
+              oneOf:
+                - type: number
+                - type: string
+            unit:
+              type: string
+            location:
+              type: string
+            activityDate:
+              type: string
+              format: date-time
+
+    SportResultInput:
+      allOf:
+        - $ref: '#/components/schemas/SportResult'
+      required: [id, author, type, activity, value, unit, activityDate]
+
+    FileItem:
+      allOf:
+        - $ref: '#/components/schemas/BaseItem'
+        - type: object
+          properties:
+            originalName:
+              type: string
+            size:
+              type: integer
+            format:
+              type: string
+            description:
+              type: string
+
+    FileItemInput:
+      allOf:
+        - $ref: '#/components/schemas/FileItem'
+      required: [id, author, type, originalName, size, format]
+
+    Event:
+      allOf:
+        - $ref: '#/components/schemas/BaseItem'
+        - type: object
+          properties:
+            title:
+              type: string
+            startDate:
+              type: string
+              format: date-time
+            endDate:
+              type: string
+              format: date-time
+            location:
+              type: string
+            participants:
+              type: array
+              items:
+                type: string
+            description:
+              type: string
+            eventType:
+              type: string
+
+    EventInput:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+      required: [id, author, type, title, startDate]

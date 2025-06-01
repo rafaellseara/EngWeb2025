@@ -1,0 +1,17 @@
+{
+  "id": "33333333-3333-3333-3333-333333333333",
+  "author": "tester",
+  "createdAt": "2025-05-06T12:00:00Z",
+  "items": [
+    {
+      "type": "Photo",
+      "path": "Test.svg.png",
+      "metadata": {
+        "visibility":"private",
+        "tags":["test"],
+        "caption":"Test.svg.png",
+        "format":"png"
+      }
+    }
+  ]
+}
